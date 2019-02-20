@@ -38,7 +38,7 @@ class NewMarket extends React.Component {
     return (
       <UserContext.Consumer>
 
-      {({ user }) => (
+      {({ user }) => 
         <>
         <div className="market-header">
           <h1 className="market-title">
@@ -87,7 +87,7 @@ class NewMarket extends React.Component {
           </Dialog.Footer>
         </Dialog>
       </>
-      )}
+      }
       </UserContext.Consumer>
     )
   }
