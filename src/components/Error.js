@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
 const Error = ({ errors }) => (
-    <pre className="error">
-      {errors.map(( err, i ) => {
-          return (
-            <div
-              key={i}>{err.message}
-            >
-            </div>
-          )
-       })}
-    </pre>
+  <pre className='error'>
+    {errors.map((err, i) => {
+      return (
+        <div
+          key={i}>{err.message}
+        >
+        </div>
+      )
+    })}
+  </pre>
 )
 
-export default Error;
+export default Error

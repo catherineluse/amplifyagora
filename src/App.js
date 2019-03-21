@@ -9,21 +9,30 @@ import Navbar from './components/Navbar';
 import "./App.css";
 
 export const UserContext = React.createContext();
-
 class App extends React.Component {
+
   state = {
-    user: null
+    user: null,
+    userAttributes: null
   };
 
   componentDidMount() {
     this.getUserData();
-    Hub.listen('auth', this, 'onHubCapsule');
-  }
+    Hub.listen("auth", this, "onHubCapsule");
+  };
 
   getUserData = async () => {
     const user = await Auth.currentAuthenticatedUser();
-    user ? this.setState({ user }) : this.setState({ user: null});
-  }
+    user
+      ? this.setState({ user }, () => this.getUserAttributes(this.state.user))
+      : this.setState({ user: null });
+  };
+
+  getUserAttributes = async authUserData => {
+    const attributesArr = await Auth.userAttributes(authUserData);
+    const attributesObj = Auth.attributesToObject(attributesArr);
+    this.setState({ userAttributes: attributesObj });
+  };
 
   onHubCapsule = capsule => {
     switch(capsule.payload.event) {
@@ -65,7 +74,14 @@ class App extends React.Component {
           <div className="app-container">
             <Route exact path="/"component={HomePage}/>
             <Route path="/profile" component={ProfilePage}/>
-            <Route path="/markets/:marketId" component={({ match }) => <MarketPage marketId={match.params.marketId} />}
+            <Route path="/markets/:marketId" component={({ match }) => {
+              return(
+                <MarketPage 
+                  user={user}
+                  marketId={match.params.marketId} 
+                />
+              )
+            }}
             />
           </div>
         </React.Fragment>

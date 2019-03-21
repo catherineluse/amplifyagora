@@ -142,8 +142,7 @@ class NewMarket extends React.Component {
       </>
       )}
       </UserContext.Consumer>
-    );
-  }
+    )}
 }
 
 export default NewMarket;
